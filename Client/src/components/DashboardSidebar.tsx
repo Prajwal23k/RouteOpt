@@ -45,7 +45,7 @@ const SidebarContent = ({ onClose }: { onClose?: () => void }) => {
               <Leaf className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="font-display text-xl font-bold text-gradient-primary">RideGreen</h1>
+              <h1 className="font-display text-xl font-bold text-gradient-primary">RouteOpt</h1>
               <p className="text-xs text-muted-foreground">Eco Carpooling</p>
             </div>
           </Link>
@@ -136,7 +136,7 @@ export const MobileHeader = () => {
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Leaf className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-display font-bold text-gradient-primary">RideGreen</span>
+            <span className="font-display font-bold text-gradient-primary">RouteOpt</span>
           </Link>
         </div>
       </div>

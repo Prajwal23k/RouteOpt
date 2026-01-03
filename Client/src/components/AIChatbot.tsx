@@ -11,7 +11,7 @@ interface Message {
 const initialMessages: Message[] = [
   {
     id: '1',
-    text: "Hi! I'm your RideGreen assistant 🌿 I can help you book rides, find matches, check your carbon savings, or answer safety questions. What would you like to do?",
+    text: "Hi! I'm your RouteOpt assistant 🌿 I can help you book rides, find matches, check your carbon savings, or answer safety questions. What would you like to do?",
     sender: 'bot',
     timestamp: new Date(),
   },
@@ -104,7 +104,7 @@ const AIChatbot = () => {
                 <Leaf className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
-                <h3 className="font-display font-semibold text-primary-foreground">RideGreen AI</h3>
+                <h3 className="font-display font-semibold text-primary-foreground">RouteOpt AI</h3>
                 <p className="text-xs text-primary-foreground/70">Always here to help</p>
               </div>
             </div>

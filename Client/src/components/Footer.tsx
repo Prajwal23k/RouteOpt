@@ -12,7 +12,7 @@ const Footer = () => {
               <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
                 <Leaf className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="font-display text-xl font-bold">RideGreen</span>
+              <span className="font-display text-xl font-bold">RouteOpt</span>
             </Link>
             <p className="text-sm text-primary-foreground/60 mb-6">
               Making every commute count towards a greener tomorrow.
@@ -63,7 +63,7 @@ const Footer = () => {
 
         <div className="pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-primary-foreground/60">
-            © 2026 RideGreen. All rights reserved.
+            © 2026 RouteOpt. All rights reserved.
           </p>
           <div className="flex items-center gap-2 text-sm text-primary-foreground/60">
             <Leaf className="w-4 h-4 text-primary" />

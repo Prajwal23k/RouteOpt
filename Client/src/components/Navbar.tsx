@@ -14,7 +14,7 @@ const Navbar = () => {
             <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
               <Leaf className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-display text-xl font-bold text-gradient-primary">RideGreen</span>
+            <span className="font-display text-xl font-bold text-gradient-primary">RouteOpt</span>
           </Link>
 
           {/* Desktop Navigation */}
