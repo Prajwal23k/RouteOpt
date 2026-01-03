@@ -29,7 +29,7 @@ const HeroSection = () => {
           {/* Subheadline */}
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-slide-up" style={{ animationDelay: '100ms' }}>
             Join verified colleagues for smarter, safer, and greener commutes. 
-            Track your carbon savings and contribute to a sustainable future.
+            Track your carbon savings and contribute to a Sustainable future.
           </p>
 
           {/* CTA Buttons */}
