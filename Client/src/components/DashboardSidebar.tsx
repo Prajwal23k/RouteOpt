@@ -90,13 +90,13 @@ const SidebarContent = ({ onClose }: { onClose?: () => void }) => {
       {/* User Section */}
       <div className="p-4 border-t border-sidebar-border">
         <div className="flex items-center gap-3 p-3 rounded-xl bg-sidebar-accent mb-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-eco-forest flex items-center justify-center text-primary-foreground font-semibold">
+          {/* <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-eco-forest flex items-center justify-center text-primary-foreground font-semibold">
             AS
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-sm text-sidebar-foreground truncate">Arjun Singh</p>
-            <p className="text-xs text-muted-foreground truncate">arjun@company.com</p>
-          </div>
+          </div> */}
+          {/* <div className="flex-1 min-w-0"> */}
+            {/* <p className="font-medium text-sm text-sidebar-foreground truncate">Arjun Singh</p>
+            <p className="text-xs text-muted-foreground truncate">arjun@company.com</p> */}
+          {/* </div> */}
         </div>
         
         <div className="flex gap-2">
