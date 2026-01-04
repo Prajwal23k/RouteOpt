@@ -22,7 +22,7 @@ const Dashboard = () => {
         <header className="hidden lg:block sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-display font-bold text-foreground">Good Morning, Buddy! 🌿</h1>
+              <h1 className="text-2xl font-display font-bold text-foreground">Hello, {localStorage.getItem('userName') || 'Rider'}! 🌿</h1>
               <p className="text-sm text-muted-foreground">Let's make your commute greener today</p>
             </div>
             <div className="flex items-center gap-4">
@@ -46,7 +46,7 @@ const Dashboard = () => {
         <div className="p-4 lg:p-8 space-y-6 lg:space-y-8">
           {/* Mobile Greeting */}
           <div className="lg:hidden">
-            <h1 className="text-xl font-display font-bold text-foreground">Good Morning, Buddy! 🌿</h1>
+            <h1 className="text-xl font-display font-bold text-foreground">Good Morning, {localStorage.getItem('userName') || 'Rider'}! 🌿</h1>
             <p className="text-sm text-muted-foreground">Let's make your commute greener today</p>
           </div>
 

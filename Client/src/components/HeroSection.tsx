@@ -35,7 +35,7 @@ const HeroSection = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{ animationDelay: '200ms' }}>
             <Link
-              to="/dashboard"
+              to="/login"
               className="px-8 py-4 rounded-2xl btn-primary font-semibold text-lg flex items-center gap-2 group"
             >
               Get Started Free

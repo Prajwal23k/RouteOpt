@@ -32,11 +32,11 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <button className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <Link to="/login" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
               Sign In
-            </button>
+            </Link>
             <Link
-              to="/dashboard"
+              to="/login"
               className="px-5 py-2.5 rounded-xl btn-primary text-sm font-semibold"
             >
               Get Started
@@ -66,11 +66,11 @@ const Navbar = () => {
                 Impact
               </a>
               <div className="flex flex-col gap-2 px-4 pt-4 border-t border-border">
-                <button className="w-full py-2.5 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                <Link to="/login" className="w-full py-2.5 text-sm font-medium text-foreground hover:text-primary transition-colors">
                   Sign In
-                </button>
+                </Link>
                 <Link
-                  to="/dashboard"
+                  to="/login"
                   className="w-full py-2.5 rounded-xl btn-primary text-sm font-semibold text-center"
                 >
                   Get Started
