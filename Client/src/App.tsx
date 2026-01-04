@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import Carbon from "./pages/Carbon";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import FindRides from "./pages/FindRides";
@@ -30,6 +30,16 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Protected */}
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route path="/carbon" element={<Carbon />} />
 
           <Route path="/create-ride" element={<CreateRide />} />
           <Route path="/rides" element={<AllRides />} />
@@ -42,15 +52,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Protected */}
-          <Route
-            path="/dashboard"
-            element={
-              <RequireAuth>
-                <Dashboard />
-              </RequireAuth>
-            }
-          />
+  
 
 
           <Route path="/find-rides" element={<FindRides />} />

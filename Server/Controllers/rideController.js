@@ -9,7 +9,10 @@ export const createRide = async (req, res) => {
     [from, to, time, seats, req.user.id]
   );
 
-  res.json({ message: "Ride created", ride: result.rows[0] });
+  res.json({
+    message: "Ride created",
+    ride: result.rows[0],
+  });
 };
 
 export const getAllRides = async (req, res) => {
@@ -37,7 +40,8 @@ export const getSuggestedRides = async (req, res) => {
 
   const suggestions = result.rows.filter((ride) => {
     const rideTime = new Date(`2024-01-01 ${ride.time}`);
-    const diff = Math.abs(rideTime - userTime) / (1000 * 60);
+    const diff =
+      Math.abs(rideTime - userTime) / (1000 * 60);
     return diff <= 30;
   });
 
@@ -45,7 +49,15 @@ export const getSuggestedRides = async (req, res) => {
 };
 
 export const getCarbonStats = (req, res) => {
-  const { distance, people } = req.query;
-  const stats = calculateCarbon(Number(distance), Number(people));
+  const distance = Number(req.query.distance);
+  const people = Number(req.query.people);
+
+  if (distance <= 0 || people <= 0) {
+    return res.status(400).json({
+      error: "Invalid distance or people value",
+    });
+  }
+
+  const stats = calculateCarbon(distance, people);
   res.json(stats);
 };

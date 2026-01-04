@@ -1,5 +1,7 @@
 import { useState } from "react";
 import API from "../services/api";
+import DashboardSidebar from "@/components/DashboardSidebar";
+import { MobileHeader } from "@/components/DashboardSidebar";
 
 export default function CreateRide() {
   const [form, setForm] = useState({
@@ -15,22 +17,60 @@ export default function CreateRide() {
   };
 
   return (
-    <div>
-      <h2>Create Ride</h2>
+    <div className="min-h-screen bg-background">
+      <DashboardSidebar />
+      <MobileHeader />
 
-      <input placeholder="From" onChange={e=>setForm({...form,from:e.target.value})}/>
-      <input placeholder="To" onChange={e=>setForm({...form,to:e.target.value})}/>
-      <input placeholder="Time (9:00 AM)" onChange={e=>setForm({...form,time:e.target.value})}/>
-      {/* <input type="number" placeholder="Seats" onChange={e=>setForm({...form,seats:e.target.value})}/> */}
-        <input
-            type="number"
-            placeholder="Seats"
-            onChange={e =>
-                setForm({ ...form, seats: Number(e.target.value) })
+      <main className="lg:ml-64 p-6">
+        <h1 className="text-2xl font-bold mb-6">Create Ride</h1>
+
+        <div className="max-w-md space-y-4">
+          <input
+            className="w-full p-3 border rounded-lg"
+            placeholder="From"
+            value={form.from}
+            onChange={(e) =>
+              setForm({ ...form, from: e.target.value })
             }
-        />
+          />
 
-      <button onClick={submit}>Create Ride</button>
+          <input
+            className="w-full p-3 border rounded-lg"
+            placeholder="To"
+            value={form.to}
+            onChange={(e) =>
+              setForm({ ...form, to: e.target.value })
+            }
+          />
+
+          <input
+            className="w-full p-3 border rounded-lg"
+            placeholder="Time (9:00 AM)"
+            value={form.time}
+            onChange={(e) =>
+              setForm({ ...form, time: e.target.value })
+            }
+          />
+
+          <input
+            type="number"
+            min={1}
+            className="w-full p-3 border rounded-lg"
+            placeholder="Seats"
+            value={form.seats}
+            onChange={(e) =>
+              setForm({ ...form, seats: Number(e.target.value) })
+            }
+          />
+
+          <button
+            onClick={submit}
+            className="w-full bg-primary text-white py-3 rounded-lg"
+          >
+            Create Ride
+          </button>
+        </div>
+      </main>
     </div>
   );
 }

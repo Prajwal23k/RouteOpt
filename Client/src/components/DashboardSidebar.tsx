@@ -24,7 +24,6 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
-  { icon: MapPin, label: 'Find Rides', path: '/find-rides', badge: '3' },
   { icon: Calendar, label: 'Schedule', path: '/schedule' },
   { icon: Users, label: 'My Pool', path: '/my-pool' },
   { icon: Leaf, label: 'Eco Impact', path: '/eco-impact' },

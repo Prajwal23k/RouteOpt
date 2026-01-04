@@ -12,6 +12,10 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import Carbon from "./Carbon";
+import { getUserRole } from "../utils/auth";
+// import StudentDashboard from "./StudentDashboard";
+// import AdminDashboard from "./AdminDashboard";
 
 /* ---------------- TYPES ---------------- */
 
@@ -65,14 +69,14 @@ export default function Dashboard() {
   useEffect(() => {
     API.get("/rides/my")
       .then((res) => setMyRides(res.data))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   /* Suggested rides */
   useEffect(() => {
     API.get("/rides/suggested?destination=College&time=9:00 AM")
       .then((res) => setSuggestedRides(res.data))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   /* Carbon savings */
@@ -81,7 +85,7 @@ export default function Dashboard() {
       .then((res) =>
         setCarbonSavedKg(Number((res.data.saved / 1000).toFixed(1)))
       )
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (
@@ -161,13 +165,16 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
             {/* LEFT */}
             <div className="lg:col-span-4 space-y-6">
-              <div className="stat-card p-6">
-                <h3 className="font-semibold mb-4">Your Carbon Impact</h3>
-                <CarbonSavingsRing savedKg={carbonSavedKg} targetKg={50} />
-                <p className="text-xs text-primary mt-3 text-center">
+              {/* <div className="stat-card p-6"> */}
+                {/* <h3 className="font-semibold mb-4">Your Carbon Impact</h3>
+                <CarbonSavingsRing savedKg={carbonSavedKg} targetKg={50} /> */}
+                {/* <p className="text-xs text-primary mt-3 text-center">
                   Saving {carbonSavedKg} kg CO₂ 🌍
-                </p>
-              </div>
+                </p> */}
+              {/* </div> */}
+
+              {/* 👇 NEW CARBON CALCULATOR */}
+              <Carbon />
 
               <SafetyTrigger />
             </div>

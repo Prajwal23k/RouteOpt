@@ -9,10 +9,10 @@ interface Message {
 }
 
 type Props = {
-  carbonSaved: string;
+  carbonSaved?: string;
 };
 
-const AIChatbot = ({ carbonSaved }: Props) => {
+const AIChatbot = ({ carbonSaved = "0" }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
