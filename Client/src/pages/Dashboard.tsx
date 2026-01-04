@@ -1,114 +1,194 @@
-import DashboardSidebar, { MobileHeader } from '@/components/DashboardSidebar';
-import StatsOverview from '@/components/StatsOverview';
-import CarbonSavingsRing from '@/components/CarbonSavingsRing';
-import QuickBooking from '@/components/QuickBooking';
-import UpcomingRides from '@/components/UpcomingRides';
-import SafetyTrigger from '@/components/SafetyTrigger';
-import RouteMatchPreview from '@/components/RouteMatchPreview';
-import WalkCyclePromo from '@/components/WalkCyclePromo';
-import WeeklyScheduler from '@/components/WeeklyScheduler';
-import AIChatbot from '@/components/AIChatbot';
-import { Bell, Search } from 'lucide-react';
+import DashboardSidebar, { MobileHeader } from "@/components/DashboardSidebar";
+import StatsOverview from "@/components/StatsOverview";
+import CarbonSavingsRing from "@/components/CarbonSavingsRing";
+import UpcomingRides from "@/components/UpcomingRides";
+import SafetyTrigger from "@/components/SafetyTrigger";
+import RouteMatchPreview from "@/components/RouteMatchPreview";
+import WalkCyclePromo from "@/components/WalkCyclePromo";
+import WeeklyScheduler from "@/components/WeeklyScheduler";
+import AIChatbot from "@/components/AIChatbot";
+import { Bell, Plus, Car, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import API from "../services/api";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
-const Dashboard = () => {
+/* ---------------- TYPES ---------------- */
+
+type JwtUser = {
+  id: number;
+  role: string;
+  iat: number;
+  exp: number;
+};
+
+type Ride = {
+  id: number;
+  from_location: string;
+  to_location: string;
+  time: string;
+  seats: number;
+};
+
+/* ---------------- COMPONENT ---------------- */
+
+export default function Dashboard() {
+  const navigate = useNavigate();
+
+  const [authStatus, setAuthStatus] = useState("");
+  const [user, setUser] = useState<JwtUser | null>(null);
+  const [myRides, setMyRides] = useState<Ride[]>([]);
+  const [suggestedRides, setSuggestedRides] = useState<Ride[]>([]);
+  const [carbonSavedKg, setCarbonSavedKg] = useState(0);
+
+  /* Decode JWT */
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const decoded = jwtDecode<JwtUser>(token);
+      setUser(decoded);
+    } catch {
+      console.error("Invalid token");
+    }
+  }, []);
+
+  /* Verify auth */
+  useEffect(() => {
+    API.get("/protected")
+      .then((res) => setAuthStatus(res.data.message))
+      .catch(() => setAuthStatus("Unauthorized"));
+  }, []);
+
+  /* My rides */
+  useEffect(() => {
+    API.get("/rides/my")
+      .then((res) => setMyRides(res.data))
+      .catch(() => {});
+  }, []);
+
+  /* Suggested rides */
+  useEffect(() => {
+    API.get("/rides/suggested?destination=College&time=9:00 AM")
+      .then((res) => setSuggestedRides(res.data))
+      .catch(() => {});
+  }, []);
+
+  /* Carbon savings */
+  useEffect(() => {
+    API.get("/rides/carbon?distance=10&people=3")
+      .then((res) =>
+        setCarbonSavedKg(Number((res.data.saved / 1000).toFixed(1)))
+      )
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <DashboardSidebar />
       <MobileHeader />
-      
-      {/* Main Content */}
+
       <main className="lg:ml-64 min-h-screen">
-        {/* Header - Desktop Only */}
+        {/* HEADER */}
         <header className="hidden lg:block sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-display font-bold text-foreground">Hello, {localStorage.getItem('userName') || 'Rider'}! 🌿</h1>
-              <p className="text-sm text-muted-foreground">Let's make your commute greener today</p>
+              <h1 className="text-2xl font-display font-bold">
+                Hello, {user?.role || "Rider"} 🌿
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                {authStatus === "You are authorized"
+                  ? "Your green commute dashboard"
+                  : "Authentication required"}
+              </p>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search rides, routes..."
-                  className="w-64 pl-10 pr-4 py-2.5 rounded-xl bg-muted border border-border focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
-                />
-              </div>
-              <button className="relative w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors">
-                <Bell className="w-5 h-5 text-foreground" />
-                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-destructive" />
-              </button>
-            </div>
+
+            <button className="relative w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-muted/80">
+              <Bell className="w-5 h-5" />
+            </button>
           </div>
         </header>
 
-        {/* Dashboard Content */}
-        <div className="p-4 lg:p-8 space-y-6 lg:space-y-8">
-          {/* Mobile Greeting */}
-          <div className="lg:hidden">
-            <h1 className="text-xl font-display font-bold text-foreground">Good Morning, {localStorage.getItem('userName') || 'Rider'}! 🌿</h1>
-            <p className="text-sm text-muted-foreground">Let's make your commute greener today</p>
+        {/* CONTENT */}
+        <div className="p-4 lg:p-8 space-y-8">
+
+          {/* QUICK ACTIONS */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button
+              onClick={() => navigate("/create-ride")}
+              className="stat-card p-5 flex items-center gap-3 hover:scale-[1.02] transition"
+            >
+              <Plus className="text-primary" />
+              <div>
+                <p className="font-semibold">Create Ride</p>
+                <p className="text-xs text-muted-foreground">
+                  Offer a carpool
+                </p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigate("/rides")}
+              className="stat-card p-5 flex items-center gap-3 hover:scale-[1.02] transition"
+            >
+              <Car className="text-primary" />
+              <div>
+                <p className="font-semibold">View All Rides</p>
+                <p className="text-xs text-muted-foreground">
+                  Explore carpools
+                </p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigate("/suggested")}
+              className="stat-card p-5 flex items-center gap-3 hover:scale-[1.02] transition"
+            >
+              <Sparkles className="text-primary" />
+              <div>
+                <p className="font-semibold">Suggested Rides</p>
+                <p className="text-xs text-muted-foreground">
+                  Smart matching
+                </p>
+              </div>
+            </button>
           </div>
 
-          {/* Stats Overview */}
-          <section className="animate-slide-up">
-            <StatsOverview />
-          </section>
+          {/* ADMIN STATS */}
+          {user?.role === "admin" && <StatsOverview />}
 
-          {/* Main Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 lg:gap-6">
-            {/* Left Column - Carbon Savings & Quick Booking */}
-            <div className="md:col-span-1 lg:col-span-4 space-y-4 lg:space-y-6">
-              {/* Carbon Savings Card */}
-              <div className="stat-card p-6 animate-slide-up" style={{ animationDelay: '100ms' }}>
-                <h3 className="font-display text-lg font-semibold text-foreground mb-4">Your Carbon Impact</h3>
-                <div className="flex justify-center">
-                  <CarbonSavingsRing savedKg={24.5} targetKg={50} />
-                </div>
-                <div className="mt-4 text-center">
-                  <p className="text-sm text-muted-foreground">Monthly Target: 50 kg</p>
-                  <p className="text-xs text-primary mt-1">You're in the top 15% of eco-commuters! 🌟</p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+            {/* LEFT */}
+            <div className="lg:col-span-4 space-y-6">
+              <div className="stat-card p-6">
+                <h3 className="font-semibold mb-4">Your Carbon Impact</h3>
+                <CarbonSavingsRing savedKg={carbonSavedKg} targetKg={50} />
+                <p className="text-xs text-primary mt-3 text-center">
+                  Saving {carbonSavedKg} kg CO₂ 🌍
+                </p>
               </div>
 
-              {/* Quick Booking */}
-              <div className="animate-slide-up" style={{ animationDelay: '150ms' }}>
-                <QuickBooking />
-              </div>
-
-              {/* Safety Trigger */}
-              <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
-                <SafetyTrigger />
-              </div>
+              <SafetyTrigger />
             </div>
 
-            {/* Center Column - Upcoming Rides & Walk/Cycle */}
-            <div className="md:col-span-1 lg:col-span-4 space-y-4 lg:space-y-6">
-              <div className="animate-slide-up" style={{ animationDelay: '250ms' }}>
-                <UpcomingRides />
-              </div>
-              <div className="animate-slide-up" style={{ animationDelay: '300ms' }}>
-                <WalkCyclePromo />
-              </div>
+            {/* CENTER */}
+            <div className="lg:col-span-4 space-y-6">
+              <UpcomingRides rides={myRides} />
+              <WalkCyclePromo />
             </div>
 
-            {/* Right Column - Route Matches & Schedule */}
-            <div className="md:col-span-2 lg:col-span-4 space-y-4 lg:space-y-6">
-              <div className="animate-slide-up" style={{ animationDelay: '350ms' }}>
-                <RouteMatchPreview />
-              </div>
-              <div className="animate-slide-up" style={{ animationDelay: '400ms' }}>
-                <WeeklyScheduler />
-              </div>
+            {/* RIGHT */}
+            <div className="lg:col-span-4 space-y-6">
+              <RouteMatchPreview rides={suggestedRides} />
+              <WeeklyScheduler />
             </div>
           </div>
         </div>
       </main>
 
-      {/* AI Chatbot */}
-      <AIChatbot />
+      {/* AI CHATBOT */}
+      <AIChatbot carbonSaved={carbonSavedKg.toString()} />
     </div>
   );
-};
-
-export default Dashboard;
+}

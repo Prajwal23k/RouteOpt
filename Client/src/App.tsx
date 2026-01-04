@@ -16,6 +16,10 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RequireAuth from "./components/RequireAuth";
+import CreateRide from "./pages/CreateRide";
+import AllRides from "./pages/AllRides";
+import SuggestedRides from "./pages/SuggestedRides";
+
 
 const queryClient = new QueryClient();
 
@@ -26,6 +30,10 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+
+          <Route path="/create-ride" element={<CreateRide />} />
+          <Route path="/rides" element={<AllRides />} />
+          <Route path="/suggested" element={<SuggestedRides />} />
 
           {/* Landing page */}
           <Route path="/" element={<Index />} />
